@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var results1: APIResult?
+    @ObservedObject var apiManager = APIManager.shared
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Section {
+            VStack {
+                Text("Joke API")
+                    .font(.title)
+                    .padding()
+                Text(results1?.joke ?? "")
+                Spacer()
+                Button("Generate") {
+                    apiManager.fetchJoke { results in
+                        results1 = results
+                    }
+                }
+            }
+            .padding()
         }
-        .padding()
     }
 }
 
